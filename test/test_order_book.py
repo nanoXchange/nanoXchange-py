@@ -1,6 +1,6 @@
 import time
 from order_book import OrderBook
-from utils import OrderSide, OrderType
+from src.core.utils import OrderSide, OrderType
 
 def test_add_buy_order():
     order_book = OrderBook()

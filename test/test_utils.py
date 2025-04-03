@@ -1,5 +1,5 @@
 
-from utils import OrderSide, OrderType
+from src.core.utils import OrderSide, OrderType
 
 def test_order_side_enum():
     assert OrderSide.BUY.value == "BUY"
