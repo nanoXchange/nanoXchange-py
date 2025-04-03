@@ -1,4 +1,4 @@
-from src.core.utils import OrderSide, OrderType
+from core.utils import OrderSide, OrderType
 
 
 def test_order_side_enum():
