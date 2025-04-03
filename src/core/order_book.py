@@ -1,4 +1,4 @@
-from utils import OrderSide, OrderType
+from .utils import OrderSide, OrderType
 import heapq
 
 class OrderBook:
