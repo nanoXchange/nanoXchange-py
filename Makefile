@@ -9,7 +9,7 @@ run:
 	. .venv/bin/activate && $(PYTHON) src/main.py
 
 test:
-	. .venv/bin/activate && pytest tests/
+	. .venv/bin/activate && pytest test/
 
 freeze:
 	. .venv/bin/activate && $(PIP) freeze --exclude-editable > requirements.txt
