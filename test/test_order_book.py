@@ -1,6 +1,6 @@
-from src.core.order_book import OrderBook
-from src.core.utils import OrderSide, OrderType
-from src.core.order import Order
+from core.order_book import OrderBook
+from core.utils import OrderSide, OrderType
+from core.order import Order
 
 
 def test_add_buy_order():

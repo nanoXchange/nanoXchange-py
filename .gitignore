@@ -9,12 +9,6 @@ __pycache__/
 env/
 venv/
 
-# VS Code / IDE
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
 # Logs / output
 *.log
 logs/
