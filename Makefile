@@ -1,5 +1,6 @@
 PYTHON := .venv/bin/python
 PIP := .venv/bin/pip
+.PHONY: test
 
 setup:
 	python -m venv .venv
@@ -9,7 +10,9 @@ run:
 	. .venv/bin/activate && $(PYTHON) src/main.py
 
 test:
-	. .venv/bin/activate && pytest test/
+	. .venv/bin/activate && PYTHONPATH=. pytest test/
+	black src/ test/ 
+	ruff check src/ test/
 
 freeze:
 	. .venv/bin/activate && $(PIP) freeze --exclude-editable > requirements.txt
