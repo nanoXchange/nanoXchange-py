@@ -7,7 +7,7 @@ class OrderBook:
         self.asks = [] # min heap for asks
         self.orders = {} # dictionary to store orders by id
 
-    def add_order(self, order: Order):  # type: ignore
+    def add_order(self, order):
         self.orders[order.id] = order
         if order.side == OrderSide.BUY:
             heapq.heappush(self.bids, order)

@@ -1,5 +1,5 @@
 import time
-from src.core.order_book import OrderBook
+from order_book import OrderBook
 from src.core.utils import OrderSide, OrderType
 
 def test_add_buy_order():
