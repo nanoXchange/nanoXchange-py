@@ -1,6 +1,7 @@
 import time
 from .utils import OrderSide
 
+
 class Order:
     def __init__(self, id, side, price, quantity, order_type):
         self.id = id
