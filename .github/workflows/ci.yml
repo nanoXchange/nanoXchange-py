@@ -22,7 +22,7 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          pytest test/
+          PYTHONPATH=. pytest test/
 
       - name: Check formatting with black
         run: |
