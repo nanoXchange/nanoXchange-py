@@ -1,17 +1,18 @@
 import time
-from order_book import OrderBook
+from src.core.order_book import OrderBook
 from src.core.utils import OrderSide, OrderType
+from src.core.order import Order
 
 def test_add_buy_order():
     order_book = OrderBook()
-    order = Order(id="1", side=OrderSide.BUY, price=100.0, quantity=10, order_type=OrderType.LIMIT) # type: ignore
+    order = Order(id="1", side=OrderSide.BUY, price=100.0, quantity=10, order_type=OrderType.LIMIT)
     order_book.add_order(order)
     assert len(order_book.bids) == 1
     assert order_book.bids[0] == order
 
 def test_add_sell_order():
     order_book = OrderBook()
-    order = Order(id="2", side=OrderSide.SELL, price=101.0, quantity=5, order_type=OrderType.LIMIT) # type: ignore
+    order = Order(id="2", side=OrderSide.SELL, price=101.0, quantity=5, order_type=OrderType.LIMIT) 
     order_book.add_order(order)
     assert len(order_book.asks) == 1
     assert order_book.asks[0] == order
