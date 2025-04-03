@@ -9,7 +9,6 @@ class Trade:
         :param sell_id: ID of the seller
         :param quantity: Quantity of the asset traded
         :param price: Price at which the trade occurred
-        :param timestamp: Timestamp of the trade
         """
         # TODO: move this out of here, ensure some constraint check on the params before calling init
         if not isinstance(quantity, int):
