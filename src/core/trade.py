@@ -11,7 +11,7 @@ class Trade:
         :param price: Price at which the trade occurred
         :param timestamp: Timestamp of the trade
         """
-        #TODO: move this out of here, ensure some constraint check on the params before calling init
+        # TODO: move this out of here, ensure some constraint check on the params before calling init
         if not isinstance(quantity, int):
             raise ValueError("Quantity must be an integer")
         if quantity <= 0:

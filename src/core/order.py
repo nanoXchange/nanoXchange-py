@@ -19,7 +19,14 @@ class Order:
     # Internally stores attributes like fields in a C struct.
     # __slots__ = ['id', 'side', 'price', 'quantity', 'order_type', 'timestamp']
 
-    def __init__(self, id: str, side: OrderSide, price: float, quantity: int, order_type: OrderType):
+    def __init__(
+        self,
+        id: str,
+        side: OrderSide,
+        price: float,
+        quantity: int,
+        order_type: OrderType,
+    ):
         """
         Initialize an order.
         :param id: Unique identifier for the order.
@@ -38,15 +45,13 @@ class Order:
             raise TypeError("Order quantity must be an integer.")
         if not isinstance(order_type, OrderType):
             raise TypeError("Order type must be an instance of OrderType.")
-        
+
         self.id: str = id
         self.side: OrderSide = side
         self.price: float = price
         self.quantity: int = quantity
         self.order_type: OrderType = order_type
         self.timestamp: datetime = datetime.now()
-
-
 
     def __lt__(self, other):
         """
@@ -55,7 +60,7 @@ class Order:
         :return: True if this order is less than the other order, False otherwise.
         """
 
-        #TODO: Implement a more optimised comparison logic: short circuit eval, reduce nesting.
+        # TODO: Implement a more optimised comparison logic: short circuit eval, reduce nesting.
 
         if self.side == OrderSide.BUY:
             if self.price != other.price:
