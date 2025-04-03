@@ -22,12 +22,12 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          pytest tests/
+          pytest test/
 
       - name: Check formatting with black
         run: |
-          black --check src/ tests/
+          black --check src/ test/
 
       - name: Lint with Ruff
         run: |
-          ruff check src/ tests/
+          ruff check src/ test/
