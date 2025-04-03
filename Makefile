@@ -6,6 +6,7 @@ PIP := .venv/bin/pip
 setup:
 	python -m venv .venv
 	. .venv/bin/activate && $(PIP) install -r requirements.txt
+	. .venv/bin/activate && $(PIP) install -e .
 
 run:
 	$(PYTHON) src/main.py
