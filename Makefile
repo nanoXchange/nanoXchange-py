@@ -12,6 +12,8 @@ run:
 	$(PYTHON) src/main.py
 
 test:
+	black .
+	ruff check . --fix
 	pytest test
 
 freeze:

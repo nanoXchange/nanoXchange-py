@@ -23,7 +23,7 @@ jobs:
 
       - name: Run tests with pytest
         run: |
-          make test
+          pytest test
 
       - name: Check formatting with black
         run: |
