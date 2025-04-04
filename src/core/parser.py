@@ -25,7 +25,7 @@ class Parser:
         parts = message.split(self.delimiter)
         data = {}
         for part in parts:
-            if '=' not in part:
+            if "=" not in part:
                 raise ValueError(f"Malformed part in message: '{part}'")
             key, value = part.split("=")
             data[key] = value
