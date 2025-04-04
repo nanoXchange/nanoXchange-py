@@ -1,0 +1,75 @@
+@startuml Order Book Class Diagram
+
+enum OrderSide {
+  BUY
+  SELL
+}
+
+enum OrderType {
+  LIMIT
+  MARKET
+}
+
+class Order {
+  - order_id: str
+  - side: OrderSide
+  - price: float
+  - quantity: int
+  - remaining: int
+  - order_type: OrderType
+  - timestamp: float
+  + __lt__(other: Order): bool
+}
+
+class Trade {
+  - buy_id: str
+  - sell_id: str
+  - quantity: int
+  - price: float
+  - timestamp: float
+  + __str__(): str
+}
+
+class OrderBook {
+  - buys: list
+  - sells: list
+  - orders: dict
+  + add_order(order: Order): bool
+  + cancel_order(order_id: str): bool
+  + get_best(side: OrderSide): Order
+}
+
+class MatchEngine {
+  - book: OrderBook
+  - trades: list
+  + place_order(order: Order): bool
+}
+
+class EventLogger {
+  + log_event(event: str)
+  + log_trade(trade: Trade)
+}
+
+class Parser {
+  + decode(message: str): dict
+  + encode(data: dict): str
+}
+
+class Exchange {
+  - orderBooks: dict      // ticker -> OrderBook
+  - matchEngines: dict    // ticker -> MatchEngine
+  + process_order(ticker: str, order: Order)
+  + display_orderbook(ticker: str): OrderBook
+}
+
+
+Parser --> Exchange : "decodes FIX & sends commands"
+Exchange --> OrderBook : "manages orders/display"
+Exchange --> MatchEngine : "forwards order-related commands"
+MatchEngine --> OrderBook : "uses for matching orders"
+EventLogger --> Trade
+OrderBook --> Order
+Order --> OrderSide
+Order --> OrderType
+
+@enduml
