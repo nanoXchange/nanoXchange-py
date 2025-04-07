@@ -40,3 +40,16 @@ def test_get_best_bid():
     order_book.add_order(order2)
     best_bid = order_book.get_best_bid(OrderSide.BUY)
     assert best_bid == order2  # highest price should be returned
+
+
+def test_add_order_duplicate_id():
+    order_book = OrderBook()
+    order = Order(
+        id="1", side=OrderSide.BUY, price=100, quantity=10, order_type=OrderType.LIMIT
+    )
+    order_book.add_order(order)
+    # Duplicate order with same ID
+    duplicate_order = Order(
+        id="1", side=OrderSide.BUY, price=105, quantity=5, order_type=OrderType.LIMIT
+    )
+    assert not order_book.add_order(duplicate_order)
