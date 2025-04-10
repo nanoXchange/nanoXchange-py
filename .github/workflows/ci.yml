@@ -24,11 +24,9 @@ jobs:
       - name: Run tests with pytest
         run: |
           pytest test
+          ./test/server/integration/run_server_tests.sh
 
-      - name: Check formatting with black
+      - name: Formatting and Linting
         run: |
           black --check src/ test/
-
-      - name: Lint with Ruff
-        run: |
           ruff check src/ test/

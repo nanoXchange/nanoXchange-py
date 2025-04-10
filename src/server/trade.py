@@ -30,6 +30,15 @@ class Trade:
         self.price: float = price
         self.timestamp: datetime = datetime.now()
 
+    def to_dict(self) -> dict:
+        return {
+            "buy_id": self.buy_id,
+            "sell_id": self.sell_id,
+            "quantity": self.quantity,
+            "price": self.price,
+            "timestamp": self.timestamp.isoformat(),
+        }
+
     def __str__(self):
         def format_quantity(qty):
             if qty >= 1_000_000:

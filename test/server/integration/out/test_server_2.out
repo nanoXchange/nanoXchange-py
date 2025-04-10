@@ -1,0 +1,22 @@
+35=D|57=O1|39=TSLA|38=15|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O2|39=TSLA|38=5|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O3|39=TSLA|38=20|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O4|39=TSLA|38=0|54=SELL|11=LIMIT|55=1|trades=[{'buy_id': 'O3', 'sell_id': 'O4', 'quantity': 10, 'price': 710.0, 'timestamp': '2025-04-11T06:50:29.099031'}]
+35=D|57=O5|39=TSLA|38=15|54=SELL|11=LIMIT|55=0|trades=[]
+35=D|57=O1|39=TSLA|38=0|54=SELL|11=MARKET|55=1|trades=[{'buy_id': 'O3', 'sell_id': 'O1', 'quantity': 10, 'price': 710.0, 'timestamp': '2025-04-11T06:50:29.099071'}]
+35=8|39=TSLA|bids=['2025-04-11 06:50:29.098982 | BUY 5 @ 705.0 (id=O2)', '2025-04-11 06:50:29.098933 | BUY 15 @ 700.0 (id=O1)']|asks=['2025-04-11 06:50:29.099050 | SELL 15 @ 715.0 (id=O5)']|market_buys=[]|market_sells=[]
+35=D|57=O2|39=TSLA|38=0|54=BUY|11=MARKET|55=1|trades=[{'buy_id': 'O2', 'sell_id': 'O5', 'quantity': 10, 'price': 715.0, 'timestamp': '2025-04-11T06:50:29.099107'}]
+35=D|57=O6|39=TSLA|38=0|54=SELL|11=LIMIT|55=1|trades=[{'buy_id': 'O2', 'sell_id': 'O6', 'quantity': 5, 'price': 705.0, 'timestamp': '2025-04-11T06:50:29.099126'}]
+35=D|57=O3|39=TSLA|38=0|54=BUY|11=MARKET|55=1|trades=[{'buy_id': 'O3', 'sell_id': 'O5', 'quantity': 5, 'price': 715.0, 'timestamp': '2025-04-11T06:50:29.099142'}]
+35=8|39=TSLA|bids=['2025-04-11 06:50:29.098933 | BUY 15 @ 700.0 (id=O1)']|asks=[]|market_buys=[]|market_sells=[]
+35=F|57=O999|39=TSLA|55=rejected
+35=F|57=O2|39=TSLA|55=rejected
+35=D|57=O7|39=TSLA|38=30|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O8|39=TSLA|38=0|54=SELL|11=LIMIT|55=1|trades=[{'buy_id': 'O1', 'sell_id': 'O8', 'quantity': 10, 'price': 700.0, 'timestamp': '2025-04-11T06:50:29.099190'}]
+35=D|57=O9|39=TSLA|38=0|54=SELL|11=LIMIT|55=1|trades=[{'buy_id': 'O1', 'sell_id': 'O9', 'quantity': 5, 'price': 700.0, 'timestamp': '2025-04-11T06:50:29.099206'}, {'buy_id': 'O7', 'sell_id': 'O9', 'quantity': 7, 'price': 699.0, 'timestamp': '2025-04-11T06:50:29.099208'}]
+35=D|57=O4|39=TSLA|38=50|54=BUY|11=MARKET|55=0|trades=[]
+35=8|39=TSLA|bids=['2025-04-11 06:50:29.099173 | BUY 23 @ 699.0 (id=O7)']|asks=[]|market_buys=['2025-04-11 06:50:29.099220 | BUY 50 (Market) (id=O4)']|market_sells=[]
+35=F|57=O1|39=TSLA|55=rejected
+35=D|57=O5|39=TSLA|38=0|54=SELL|11=MARKET|55=1|trades=[{'buy_id': 'O7', 'sell_id': 'O5', 'quantity': 5, 'price': 699.0, 'timestamp': '2025-04-11T06:50:29.099251'}]
+35=8|39=TSLA|bids=['2025-04-11 06:50:29.099173 | BUY 18 @ 699.0 (id=O7)']|asks=[]|market_buys=['2025-04-11 06:50:29.099220 | BUY 50 (Market) (id=O4)']|market_sells=[]
+35=F|57=O10|39=TSLA|55=rejected

@@ -1,5 +1,5 @@
 import pytest
-from core.trade import Trade
+from server.trade import Trade
 
 
 def test_create_valid_trade():

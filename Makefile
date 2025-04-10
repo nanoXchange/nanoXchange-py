@@ -15,6 +15,7 @@ test:
 	black .
 	ruff check . --fix
 	pytest test
+	./test/server/integration/run_server_tests.sh
 
 freeze:
 	$(PIP) freeze --exclude-editable > requirements.txt

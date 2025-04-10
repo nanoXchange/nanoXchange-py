@@ -55,7 +55,6 @@ class Exchange {
   - orderBooks: dict      // ticker -> OrderBook
   - matchEngines: dict    // ticker -> MatchEngine
   - order_to_client: dict
-  + generate_order_id(): str
   + add_order(order: Order): dict
   + cancel_order(order_id: str): dict
   + display_orderbook(): dict
