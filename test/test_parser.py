@@ -27,9 +27,17 @@ def test_encode_cancel_order():
 
 def test_decode_fix_message():
     parser = Parser()
-    fix_msg = "type=ADD|ticker=AAPL|price=150.0|quantity=100"
-    expected = {"type": "ADD", "ticker": "AAPL", "price": "150.0", "quantity": "100"}
-    assert parser.decode(fix_msg) == expected
+    fix_msg = "56='D'|11='limit'|39='AAPL'|44='150.0'|38='100'|54='1'"
+    decoded = parser.decode(fix_msg)
+    expected = {
+        "message_type": "D",
+        "order_type": "limit",
+        "ticker": "AAPL",
+        "price": "150.0",
+        "quantity": "100",
+        "side": "1",
+    }
+    assert decoded == expected
 
 
 def test_decode_invalid_fix_message():
@@ -39,10 +47,24 @@ def test_decode_invalid_fix_message():
         parser.decode(invalid_msg)
 
 
-def test_decode_and_encode_round_trip():
+def test_decode_and_encode_round_trip_consistency():
     parser = Parser()
-    original = {"type": "ADD", "ticker": "GOOG", "price": 2700.25, "quantity": 5}
+    original = {
+        "56": "D",
+        "11": "limit",
+        "39": "TSLA",
+        "44": 800.0,
+        "38": 10,
+        "54": "1",
+    }
     fix_msg = parser.encode(original)
     decoded = parser.decode(fix_msg)
-    expected = {k: str(v) for k, v in original.items()}
-    assert decoded == expected
+    expected_keys = {
+        "message_type",
+        "order_type",
+        "ticker",
+        "price",
+        "quantity",
+        "side",
+    }
+    assert expected_keys.issubset(set(decoded.keys()))

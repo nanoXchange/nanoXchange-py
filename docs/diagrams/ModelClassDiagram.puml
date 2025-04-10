@@ -37,12 +37,13 @@ class OrderBook {
   + add_order(order: Order): bool
   + cancel_order(order_id: str): bool
   + get_best(side: OrderSide): Order
+  + snapshot(): dict
 }
 
 class MatchEngine {
   - book: OrderBook
   - trades: list
-  + place_order(order: Order): bool
+  + try_match(order: Order): bool
 }
 
 class EventLogger {
@@ -50,23 +51,50 @@ class EventLogger {
   + log_trade(trade: Trade)
 }
 
-class Parser {
-  + decode(message: str): dict
-  + encode(data: dict): str
-}
-
 class Exchange {
   - orderBooks: dict      // ticker -> OrderBook
   - matchEngines: dict    // ticker -> MatchEngine
-  + process_order(ticker: str, order: Order)
-  + display_orderbook(ticker: str): OrderBook
+  - order_to_client: dict
+  + generate_order_id(): str
+  + add_order(order: Order): dict
+  + cancel_order(order_id: str): dict
+  + display_orderbook(): dict
+  + execute_command(command: Command, client_id: str)
 }
 
+abstract class Command {
+  + run(exchange: Exchange): dict
+}
 
-Parser --> Exchange : "decodes FIX & sends commands"
-Exchange --> OrderBook : "manages orders/display"
-Exchange --> MatchEngine : "forwards order-related commands"
-MatchEngine --> OrderBook : "uses for matching orders"
+class AddCommand {
+  - order: Order
+  + run(exchange: Exchange): dict
+}
+
+class CancelCommand {
+  - order_id: str
+  + run(exchange: Exchange): dict
+}
+
+class DisplayCommand {
+  + run(exchange: Exchange): dict
+}
+
+class Parser {
+  + decode(message: str): dict
+  + parse_fix(message: str): Command
+  + encode(data: dict): str
+}
+
+Parser --> Command : "creates"
+Exchange --> Command : "executes run()"
+Command <|-- AddCommand
+Command <|-- CancelCommand
+Command <|-- DisplayCommand
+
+Exchange --> OrderBook : "manages"
+Exchange --> MatchEngine : "delegates matching"
+MatchEngine --> OrderBook : "uses for matching"
 EventLogger --> Trade
 OrderBook --> Order
 Order --> OrderSide

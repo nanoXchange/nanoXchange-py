@@ -63,3 +63,13 @@ def test_order_timestamp_is_recent():
     order = Order("order6", OrderSide.SELL, 99.99, 1, OrderType.MARKET)
     now = datetime.now()
     assert now - order.timestamp < timedelta(seconds=1)
+
+
+def test_order_from_dict_valid_limit():
+    data = {"side": "buy", "price": "100.5", "quantity": "10", "order_type": "limit"}
+    order = Order.from_dict(data)
+    assert order.side.name == "BUY"
+    assert order.price == 100.5
+    assert order.quantity == 10
+    assert order.order_type.name == "LIMIT"
+    assert order.id is None
