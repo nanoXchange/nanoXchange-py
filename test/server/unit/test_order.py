@@ -23,7 +23,7 @@ def test_market_order_valid():
 
 
 def test_limit_order_invalid_price():
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         LimitOrder(OrderSide.BUY, 10, -5)
 
 

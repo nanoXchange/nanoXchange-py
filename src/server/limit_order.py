@@ -12,7 +12,7 @@ class LimitOrder(Order):
         price: float,
     ):
         if not isinstance(price, (int, float)) or price <= 0:
-            raise TypeError("Price must be a positive number.")
+            raise ValueError("Price must be a positive number.")
         self._price = float(price)
         super().__init__(side, quantity)
 
@@ -47,4 +47,4 @@ class LimitOrder(Order):
 
         if self.timestamp != other.timestamp:
             return self.timestamp < other.timestamp
-        return self.get_id < other.get_id
+        return self.id < other.id
