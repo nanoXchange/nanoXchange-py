@@ -1,0 +1,54 @@
+@startuml Order Flow Sequence Diagram
+
+actor Client
+participant Server
+participant Parser
+participant Command
+participant Exchange
+participant OrderBook
+participant MatchEngine
+participant Trade
+database Output as Response
+
+== Order Submission ==
+
+Client -> Server : send FIX message (e.g. "35=D|...")
+Server -> Parser : parse_order(message)
+Parser -> Order : Order.from_dict(data)
+Parser -> AddCommand : return AddCommand(order)
+Parser --> Server : Command object (e.g. AddCommand)
+
+Server -> Exchange : command.run(ticker)
+activate Exchange
+
+note right of Exchange
+In AddCommand.run():
+1. Get order book
+2. Get match engine
+3. Call engine.place_order(order)
+4. Return order + trades
+end note
+
+Exchange -> OrderBook : add_order(order)
+OrderBook --> Exchange : True/False
+
+Exchange -> MatchEngine : place_order(order)
+activate MatchEngine
+MatchEngine -> OrderBook : get_best_limit_order(...)
+loop While match possible
+    MatchEngine -> Trade : execute_trade(taker, maker)
+    Trade --> MatchEngine : Trade object
+    MatchEngine -> OrderBook : remove_order(maker.id)
+end
+MatchEngine --> Exchange : [list of Trade objects]
+deactivate MatchEngine
+
+Exchange --> Server : result as dict
+
+Server -> Parser : encode(result dict)
+Parser --> Server : encoded FIX message
+
+Server -> Response : send FIX-style response
+Response --> Client : e.g. "35=D|57=O1|...|trades=[...]"
+
+@enduml

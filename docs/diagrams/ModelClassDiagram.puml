@@ -1,5 +1,6 @@
-@startuml Order Book Class Diagram
+@startuml Updated Order Book Class Diagram
 
+' ==== ENUMS ====
 enum OrderSide {
   BUY
   SELL
@@ -10,93 +11,122 @@ enum OrderType {
   MARKET
 }
 
-class Order {
-  - order_id: str
+' ==== BASE ORDER CLASSES ====
+abstract class Order {
+  - id: str
   - side: OrderSide
-  - price: float
   - quantity: int
-  - remaining: int
-  - order_type: OrderType
   - timestamp: float
+  + get_id(): str
+  + to_dict(): dict
   + __lt__(other: Order): bool
 }
 
+class LimitOrder {
+  - _price: float
+  + price: float
+  + order_type: OrderType
+  + from_dict(data: dict): LimitOrder
+  + __lt__(other: Order): bool
+}
+
+class MarketOrder {
+  + price: float
+  + order_type: OrderType
+  + from_dict(data: dict): MarketOrder
+  + __lt__(other: Order): bool
+}
+
+Order <|-- LimitOrder
+Order <|-- MarketOrder
+
+' ==== TRADE ====
 class Trade {
   - buy_id: str
   - sell_id: str
   - quantity: int
   - price: float
   - timestamp: float
+  + to_dict(): dict
   + __str__(): str
 }
 
+Trade --> Order
+
+' ==== ORDER BOOK ====
 class OrderBook {
-  - buys: list
-  - sells: list
+  - bids: list
+  - asks: list
+  - market_buys: list
+  - market_sells: list
   - orders: dict
   + add_order(order: Order): bool
-  + cancel_order(order_id: str): bool
-  + get_best(side: OrderSide): Order
-  + snapshot(): dict
+  + remove_order(order_id: str): bool
+  + get_best_limit_order(side: OrderSide): LimitOrder
+  + get_next_market_order(side: OrderSide): MarketOrder
 }
 
+OrderBook --> Order
+
+' ==== MATCH ENGINE ====
 class MatchEngine {
   - book: OrderBook
   - trades: list
-  + try_match(order: Order): bool
+  + match_limit_order(order: LimitOrder): list[Trade]
+  + match_market_order(order: MarketOrder): list[Trade]
+  + place_order(order: Order): list[Trade]
 }
 
-class EventLogger {
-  + log_event(event: str)
-  + log_trade(trade: Trade)
-}
+MatchEngine --> OrderBook
+MatchEngine --> Trade
 
+' ==== EXCHANGE ====
 class Exchange {
-  - orderBooks: dict      // ticker -> OrderBook
-  - matchEngines: dict    // ticker -> MatchEngine
-  - order_to_client: dict
-  + add_order(order: Order): dict
-  + cancel_order(order_id: str): dict
-  + display_orderbook(): dict
-  + execute_command(command: Command, client_id: str)
+  - order_books: dict[str, OrderBook]
+  - match_engines: dict[str, MatchEngine]
+  + get_book(ticker: str): OrderBook
+  + get_engine(ticker: str): MatchEngine
+  + add_ticker(ticker: str)
 }
 
+Exchange --> OrderBook
+Exchange --> MatchEngine
+
+' ==== COMMAND SYSTEM ====
 abstract class Command {
-  + run(exchange: Exchange): dict
+  + run(ticker: str): dict
 }
 
 class AddCommand {
   - order: Order
-  + run(exchange: Exchange): dict
+  + run(ticker: str): dict
 }
 
 class CancelCommand {
   - order_id: str
-  + run(exchange: Exchange): dict
+  + run(ticker: str): dict
 }
 
 class DisplayCommand {
-  + run(exchange: Exchange): dict
+  + run(ticker: str): dict
 }
 
-class Parser {
-  + decode(message: str): dict
-  + parse_fix(message: str): Command
-  + encode(data: dict): str
-}
-
-Parser --> Command : "creates"
-Exchange --> Command : "executes run()"
 Command <|-- AddCommand
 Command <|-- CancelCommand
 Command <|-- DisplayCommand
 
-Exchange --> OrderBook : "manages"
-Exchange --> MatchEngine : "delegates matching"
-MatchEngine --> OrderBook : "uses for matching"
-EventLogger --> Trade
-OrderBook --> Order
-Order --> OrderSide
-Order --> OrderType
+Exchange --> Command : executes
+
+' ==== PARSER ====
+class Parser {
+  - delimiter: str
+  - reverse_tag_map: dict
+  + encode(data: dict): str
+  + decode(message: str): dict
+  + parse_order(message: str): Command
+}
+
+Parser --> Command : creates
+Parser --> Order
 
 @enduml
