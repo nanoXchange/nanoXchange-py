@@ -88,7 +88,7 @@ class Order:
 
             raw_type = data.get("order_type").upper()
             if raw_type is None or raw_type not in OrderType.__members__:
-                raise ValueError("Missing 'type' in order data.")
+                raise ValueError("Missing 'order_type' in order data.")
             order_type = OrderType[raw_type.upper()]
 
             raw_price = data.get("price")
