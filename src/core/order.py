@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Any, Optional
 from .utils import OrderSide, OrderType
 
 
@@ -21,7 +22,7 @@ class Order:
 
     def __init__(
         self,
-        id: str,
+        id: Optional[str],
         side: OrderSide,
         price: float,
         quantity: int,
@@ -35,7 +36,8 @@ class Order:
         :param quantity: Quantity of the asset to be traded.
         :param order_type: Type of the order (LIMIT or MARKET).
         """
-        if not isinstance(id, str):
+        # TODO: Consider removing validation checks from __init__ since done in from_dict.
+        if id is not None and not isinstance(id, str):
             raise TypeError("Order ID must be a string.")
         if not isinstance(side, OrderSide):
             raise TypeError("Order side must be an instance of OrderSide.")
@@ -70,3 +72,49 @@ class Order:
                 return self.price < other.price
 
         return self.timestamp < other.timestamp
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> "Order":
+        """
+        Create an Order object from a dictionary.
+        :param data: Dictionary containing order data.
+        :return: Order object.
+        """
+        try:
+            raw_side = data.get("side").upper()
+            if raw_side is None or raw_side not in OrderSide.__members__:
+                raise ValueError("Missing 'side' in order data.")
+            side = OrderSide[raw_side.upper()]
+
+            raw_type = data.get("order_type").upper()
+            if raw_type is None or raw_type not in OrderType.__members__:
+                raise ValueError("Missing 'order_type' in order data.")
+            order_type = OrderType[raw_type.upper()]
+
+            raw_price = data.get("price")
+            if order_type == OrderType.LIMIT:
+                if raw_price is None:
+                    raise ValueError("Missing 'price' in order data.")
+                price = float(raw_price)
+                if price <= 0:
+                    raise ValueError("Price must be greater than zero.")
+            else:
+                price = 0.0
+
+            raw_quantity = data.get("quantity")
+            if raw_quantity is None:
+                raise ValueError("Missing 'quantity' in order data.")
+            quantity = int(raw_quantity)
+            if quantity <= 0:
+                raise ValueError("Quantity must be greater than zero.")
+
+            return cls(
+                id=None,
+                side=side,
+                price=price,
+                quantity=quantity,
+                order_type=order_type,
+            )
+
+        except (TypeError, ValueError) as e:
+            raise ValueError(f"Invalid order data: {e}")
