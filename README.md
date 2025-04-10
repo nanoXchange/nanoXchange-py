@@ -1,153 +1,147 @@
-# ⚡ nanoXchange-py: Limit Order Book Simulator (Python)
+# ⚡ nanoXchange-py: FIX-Based Limit Order Book Simulator (Python)
 
-`nanoXchange-py` is a modular, interactive **Limit Order Book (LOB)** simulator written in Python. It simulates core mechanics of a financial exchange — including placing limit/market orders, executing trades, and maintaining a dynamic order book with price-time priority.
+`nanoXchange-py` is a **FIX-style message-driven Limit Order Book simulator**, purpose-built in Python for rapid experimentation, educational exploration, and pre-production prototyping. It emulates the core mechanics of a trading exchange — including matching limit/market orders with price-time priority, managing multiple tickers, and dynamically evolving order books.
 
-This project serves as a **precursor to `nanoXchange`**, a high-performance C++ implementation. `nanoXchange-py` allows developers to **prototype ideas, learn trading system design**, and validate algorithms quickly in Python before porting them to a lower-level production-grade environment.
+This simulator provides a launchpad for the future high-performance system `nanoXchange` (C++), and is ideal for **quantitative developers, system designers**, and **exchange engineers** looking to sharpen their edge or build novel infrastructure.
 
 ---
 
 ## 🎯 Project Goals
 
-- 🔍 Rapid prototyping of order matching logic and microstructure features
-- 🧠 Learn and explore exchange system design in Python
-- 🚀 Prepare for performance-critical implementation in C++
+- 📈 Prototype order matching algorithms using FIX-style interfaces
+- 🧠 Learn realistic exchange design patterns via Python OOP
+- 🔁 Provide a stepping stone toward high-performance C++ deployments
+- 🛠️ Build tools for testing HFT strategies and exchange logic
+
+---
+
+## 🧩 Key Concepts & Design Patterns
+
+- **FIX Protocol Emulation**: All orders are submitted, parsed, and returned using a human-readable FIX-style protocol.
+- **Modular OOP Architecture**:
+  - `Exchange` uses the **Singleton Pattern** for global state
+  - `Command` classes follow the **Command Pattern** for encapsulated request handling
+  - `Parser` handles encoding/decoding and acts as the protocol translator
+- **MatchEngine** follows **Separation of Concerns**, isolating trade execution logic
+- **OrderBook** uses **heap-based priority queues** for price-time management
+- Clean extensibility for logging, networking, or analytics
 
 ---
 
 ## 🛠️ Features
 
-- ✅ Limit and Market order support
-- ✅ Price-time priority matching algorithm
-- ✅ Modular object-oriented design
-- ✅ Interactive CLI for manual order placement
-- ✅ Unit tests for core components
-- ⚙️ Clean architecture for easy extension to:
-  - Networking (e.g. UDP client/server)
-  - Analytics and trade logging
-  - GUI or REST APIs
+- ✅ FIX-style order interface (e.g. `35=D|57=O1|39=AAPL|...`)
+- ✅ Market and Limit order support
+- ✅ Modular, extensible class-based architecture
+- ✅ Matching logic based on price-time priority
+- ✅ Clean separation of parsing, exchange, order book, and match engine
+- ✅ Unit tests covering core command and matching components
+- 🔧 Ready for integration with:
+  - UDP/TCP clients and servers
+  - Historical scenario replays
+  - GUI / REST APIs
 
 ---
 
----
-
-## 🚀 Getting Started (Development Workflow)
-
-### 1. Clone the repo
+## 🚀 Dev Workflow
 
 ```bash
 git clone https://github.com/nanoXchange/nanoXchange-py.git
 cd nanoXchange-py
-```
-
-### 2. Create and activate a virtual environment
-
-```bash
-make setup
-```
-
-### 3. Install dependencies
-
-```bash
+make setup        # Create & activate virtual environment
 pip install -r requirements.txt
+make run          # Launch interactive CLI (TODO)
 ```
 
-### 4. Run the CLI
+---
 
-```bash
-make run
-```
+## 💡 User Guide (FIX-style CLI)
 
-You’ll enter an interactive prompt where you can:
+Once inside the prompt, use FIX-style messages:
 
 ```
-PLACE,LIMIT,BUY,100.0,5,order1
-PLACE,MARKET,SELL,0,3,order2
-SHOW
+35=D|57=O1|39=AAPL|38=5|54=BUY|11=LIMIT|55=151.0
+35=D|57=O2|39=AAPL|38=3|54=SELL|11=MARKET
+35=8|39=AAPL
 EXIT
 ```
 
-## Running Tests
+- `35=D`: Place order
+- `35=F`: Cancel order
+- `35=8`: Display order book
+
+---
+
+## ✅ Running Tests
 
 ```bash
 make test
 ```
 
-## Freezing Dependencies
+---
 
-If you install a new package (e.g., black, pytest), freeze it:
+## 📌 Freezing Dependencies
 
 ```bash
 make freeze
+# runs: pip freeze > requirements.txt
 ```
-
-This performs `pip freeze > requirements.txt`
 
 ---
 
 ## 🛣️ Roadmap
 
-We plan to extend `nanoXchange-py` to serve both as a robust simulation platform and a stepping stone toward a C++ implementation.
+### Near-term (Python)
 
-### ✅ Near-term goals (Python)
+- [x] FIX-based CLI with parsing + encoding
+- [x] Limit and market matching via MatchEngine
+- [x] Command-based architecture (Add, Cancel, Display)
+- [x] CI workflow + pre-commit hooks (`black`, `ruff`)
+- [ ] Add structured event logger
+- [ ] Add scenario replay tool (JSON/CSV)
 
-- [x] CLI-based limit order book
-- [x] Market and limit order matching
-- [x] Unit test coverage with `pytest`
-- [x] Clean, testable modular architecture
-- [ ] Implement `EventLogger` for structured trade logs
-- [ ] Add CSV-based or JSON-based scenario replay
-- [ ] Pre-commit hooks for formatting, linting (`black`, `ruff`)
-- [ ] Add CI workflow with GitHub Actions
+### Mid-term
 
-### 🔄 Intermediate goals
+- [ ] Add support for batch orders
+- [ ] Add UDP networking interface
+- [ ] Add trade log ingestion + replay
 
-- [ ] Add UDP-based client-server networking interface
-- [ ] Implement in-memory metrics (order volume, latency stats)
-- [ ] Benchmark core engine under stress test conditions
-- [ ] Add support for iceberg/hidden orders (POC)
+### Long-term (C++)
 
-### 🚀 Long-term goals
-
-- [ ] Port to high-performance C++ version (`nanoXchange`)
-- [ ] Integrate with C++ trading bot simulator
-- [ ] Allow external interaction with nanoXchange for simulated market data and matching
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License**. See [LICENSE](./LICENSE) for details.
+- [ ] Port core engine to high-performance `nanoXchange` (C++)
+- [ ] Connect bots and client APIs to simulation
+- [ ] Simulate real market dynamics and microstructure
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! To contribute:
+We welcome contributions from quant devs, exchange engineers, and curious hackers.
 
-1. Fork the repo
-2. Create a new branch (`git checkout -b feature/awesome-feature`)
-3. Commit your changes
-4. Push to the branch (`git push origin feature/awesome-feature`)
-5. Open a Pull Request
+1. Fork this repo
+2. Create a new feature branch
+3. Submit a pull request with clear commits and passing tests
 
-Please follow the existing code style and ensure all tests pass before submitting.
+---
+
+## 📜 License
+
+This project is licensed under the MIT License. See [LICENSE](./LICENSE).
 
 ---
 
 ## 🙌 Acknowledgements
 
-- Inspired by real-world exchange architecture and matching engines
-- Developed as part of a learning and prototyping initiative by:
+- Inspired by professional matching engine architecture
+- Designed for education, experimentation, and performance evolution
+- Built by:
   - [Julian Tay](https://github.com/juliantayyc)
   - [Nihal Ramesh](https://github.com/nihalramesh)
 
 ---
 
-## 💬 Contact
+## 📬 Contact
 
-For questions, feedback, or collaboration:
-
-📧 Email us  
-📂 Open an [Issue](https://github.com/nanoXchange/nanoXchange-py/issues)
-
-<!-- 🌐 Visit our [main nanoXchange repo (C++)](https://github.com/nanoXchange/nanoXchange) when released -->
+📧 Questions or collaboration ideas?  
+📂 Open an [Issue](https://github.com/nanoXchange/nanoXchange-py/issues)  
+🚀 Stay tuned for the C++ version: `nanoXchange`
