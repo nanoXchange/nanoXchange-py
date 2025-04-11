@@ -15,12 +15,12 @@ class OrderType(Enum):
 
 TAG_MAPPINGS = {
     11: "order_type",
+    35: "message_type",
     38: "quantity",
     39: "ticker",
     44: "price",
     54: "side",
     55: "order_status",
-    56: "message_type",
     57: "order_id",
 }
 

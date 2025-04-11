@@ -1,0 +1,20 @@
+35=D|57=O1|39=AAPL|38=10|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O2|39=AAPL|38=5|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O3|39=AAPL|38=12|54=SELL|11=LIMIT|55=0|trades=[]
+35=D|57=O4|39=AAPL|38=0|54=SELL|11=LIMIT|55=1|trades=[{'buy_id': 'O2', 'sell_id': 'O4', 'quantity': 3, 'price': 151.0, 'timestamp': '2025-04-11T06:50:38.687844'}]
+35=D|57=O1|39=AAPL|38=0|54=BUY|11=MARKET|55=1|trades=[{'buy_id': 'O1', 'sell_id': 'O3', 'quantity': 6, 'price': 152.0, 'timestamp': '2025-04-11T06:50:38.687874'}]
+35=D|57=O2|39=AAPL|38=0|54=SELL|11=MARKET|55=1|trades=[{'buy_id': 'O2', 'sell_id': 'O2', 'quantity': 2, 'price': 151.0, 'timestamp': '2025-04-11T06:50:38.687893'}, {'buy_id': 'O1', 'sell_id': 'O2', 'quantity': 8, 'price': 150.0, 'timestamp': '2025-04-11T06:50:38.687896'}]
+35=8|39=AAPL|bids=['2025-04-11 06:50:38.687756 | BUY 2 @ 150.0 (id=O1)']|asks=['2025-04-11 06:50:38.687820 | SELL 6 @ 152.0 (id=O3)']|market_buys=[]|market_sells=[]
+35=D|57=O5|39=AAPL|38=4|54=BUY|11=LIMIT|55=0|trades=[]
+35=D|57=O6|39=AAPL|38=6|54=SELL|11=LIMIT|55=0|trades=[]
+35=8|39=AAPL|bids=['2025-04-11 06:50:38.687756 | BUY 2 @ 150.0 (id=O1)', '2025-04-11 06:50:38.687925 | BUY 4 @ 149.0 (id=O5)']|asks=['2025-04-11 06:50:38.687820 | SELL 6 @ 152.0 (id=O3)', '2025-04-11 06:50:38.687939 | SELL 6 @ 152.0 (id=O6)']|market_buys=[]|market_sells=[]
+35=F|57=O9999|39=AAPL|55=rejected
+35=F|57=O3|39=AAPL|55=canceled
+35=D|57=O7|39=AAPL|38=4|54=BUY|11=LIMIT|55=1|trades=[{'buy_id': 'O7', 'sell_id': 'O6', 'quantity': 6, 'price': 152.0, 'timestamp': '2025-04-11T06:50:38.687983'}]
+35=D|57=O8|39=AAPL|38=1|54=SELL|11=LIMIT|55=1|trades=[{'buy_id': 'O7', 'sell_id': 'O8', 'quantity': 4, 'price': 155.0, 'timestamp': '2025-04-11T06:50:38.688001'}]
+35=D|57=O3|39=AAPL|38=14|54=SELL|11=MARKET|55=1|trades=[{'buy_id': 'O1', 'sell_id': 'O3', 'quantity': 2, 'price': 150.0, 'timestamp': '2025-04-11T06:50:38.688019'}, {'buy_id': 'O5', 'sell_id': 'O3', 'quantity': 4, 'price': 149.0, 'timestamp': '2025-04-11T06:50:38.688021'}]
+35=D|57=O4|39=AAPL|38=14|54=BUY|11=MARKET|55=1|trades=[{'buy_id': 'O4', 'sell_id': 'O8', 'quantity': 1, 'price': 154.0, 'timestamp': '2025-04-11T06:50:38.688040'}]
+35=8|39=AAPL|bids=[]|asks=[]|market_buys=['2025-04-11 06:50:38.688036 | BUY 14 (Market) (id=O4)']|market_sells=['2025-04-11 06:50:38.688015 | SELL 14 (Market) (id=O3)']
+35=F|57=O1|39=AAPL|55=rejected
+35=F|57=O2|39=AAPL|55=rejected
+35=8|39=AAPL|bids=[]|asks=[]|market_buys=['2025-04-11 06:50:38.688036 | BUY 14 (Market) (id=O4)']|market_sells=['2025-04-11 06:50:38.688015 | SELL 14 (Market) (id=O3)']
